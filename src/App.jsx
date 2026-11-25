@@ -7,6 +7,7 @@ import './App.css'
 
 const SiteLayout = lazy(() => import('./components/SiteLayout'))
 const BookingModal = lazy(() => import('./components/BookingModal'))
+// Load each route only when it is visited so unused pages stay out of the startup bundle.
 const Home = lazy(() => import('./pages/Home'))
 const About = lazy(() => import('./pages/About'))
 const Services = lazy(() => import('./pages/Services'))

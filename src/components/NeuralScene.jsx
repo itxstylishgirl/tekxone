@@ -1,11 +1,11 @@
 import { useMemo, useRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { Float, Line, OrbitControls, Sparkles } from '@react-three/drei'
 import * as THREE from 'three'
 
 function NeuralCore() {
   const group = useRef()
   const core = useRef()
+  const sparkles = useRef()
   const nodes = useMemo(() => Array.from({ length: 68 }, (_, index) => {
     const phi = Math.acos(-1 + (2 * index) / 68)
     const theta = Math.sqrt(68 * Math.PI) * phi
@@ -21,18 +21,41 @@ function NeuralCore() {
       .filter(({ otherIndex, distance }) => otherIndex > index && distance < 0.72)
     return nearby.slice(0, 3).map(({ other }) => [point, other])
   }), [nodes])
+  const connectionPositions = useMemo(() => new Float32Array(
+    connections.flatMap(([start, end]) => [...start.toArray(), ...end.toArray()]),
+  ), [connections])
+  const sparklePositions = useMemo(() => {
+    const positions = []
+    for (let index = 0; index < 42; index += 1) {
+      const angle = index * 2.399963
+      const radius = 1.7 + ((index * 37) % 11) / 10 * 1.5
+      positions.push(
+        Math.cos(angle) * radius,
+        Math.sin(angle * 1.3) * 2.1,
+        Math.sin(angle) * radius,
+      )
+    }
+    return new Float32Array(positions)
+  }, [])
 
   useFrame((state, delta) => {
     if (!group.current) return
     group.current.rotation.y += delta * 0.08
     group.current.rotation.x += (state.pointer.y * 0.14 - group.current.rotation.x) * 0.03
     group.current.rotation.y += (state.pointer.x * 0.13) * 0.015
+    group.current.position.y = Math.sin(state.clock.elapsedTime * 1.1) * 0.06
     if (core.current) core.current.rotation.y -= delta * 0.2
+    if (sparkles.current) sparkles.current.rotation.y += delta * 0.01
   })
 
   return (
     <group ref={group}>
-      {connections.map((points, index) => <Line key={index} points={points} color="#1877F2" transparent opacity={0.24} lineWidth={0.7} />)}
+      <lineSegments>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[connectionPositions, 3]} />
+        </bufferGeometry>
+        <lineBasicMaterial color="#1877F2" transparent opacity={0.24} />
+      </lineSegments>
       {connections.slice(0, 20).map((points, index) => <DataPulse key={`pulse-${index}`} path={points} offset={index / 20} />)}
       {nodes.map((point, index) => (
         <mesh key={index} position={point}>
@@ -52,6 +75,12 @@ function NeuralCore() {
         <torusGeometry args={[1.78, 0.006, 8, 160]} />
         <meshBasicMaterial color="#1877F2" transparent opacity={0.42} />
       </mesh>
+      <points ref={sparkles}>
+        <bufferGeometry>
+          <bufferAttribute attach="attributes-position" args={[sparklePositions, 3]} />
+        </bufferGeometry>
+        <pointsMaterial color="#60A5FA" size={0.035} transparent opacity={0.75} />
+      </points>
     </group>
   )
 }
@@ -77,9 +106,7 @@ export default function NeuralScene() {
       <Canvas camera={{ position: [0, 0, 5.3], fov: 42 }} dpr={1} gl={{ alpha: true, antialias: false }}>
         <ambientLight intensity={0.7} />
         <pointLight position={[3, 2, 3]} color="#1877F2" intensity={5} />
-        <Float speed={1.1} rotationIntensity={0.12} floatIntensity={0.24}><NeuralCore /></Float>
-        <Sparkles count={42} scale={5} size={2.2} speed={0.2} color="#60A5FA" />
-        <OrbitControls enableZoom={false} enablePan={false} enableRotate={false} />
+        <NeuralCore />
       </Canvas>
     </div>
   )

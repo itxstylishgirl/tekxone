@@ -16,8 +16,20 @@ const headlines = ['AI-Driven Web Solutions', 'Next-Gen Software', 'Intelligent 
 
 export default function Home() {
   const [headlineIndex, setHeadlineIndex] = useState(0)
+  const [showNeuralScene, setShowNeuralScene] = useState(false)
   const statsRef = useRef(null)
   const { services, openBooking } = useServices()
+
+  useEffect(() => {
+    // Let the first screen paint before downloading and mounting the optional WebGL scene.
+    if ('requestIdleCallback' in window) {
+      const idleId = window.requestIdleCallback(() => setShowNeuralScene(true), { timeout: 1200 })
+      return () => window.cancelIdleCallback(idleId)
+    }
+
+    const timer = window.setTimeout(() => setShowNeuralScene(true), 250)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   useEffect(() => {
     const timer = window.setInterval(() => setHeadlineIndex((current) => (current + 1) % headlines.length), 3600)
@@ -87,9 +99,11 @@ export default function Home() {
         </div>
         <div className="hero-visual">
           <div className="visual-glow" />
-          <Suspense fallback={<div className="neural-placeholder" />}>
-            <NeuralScene />
-          </Suspense>
+          {showNeuralScene && (
+            <Suspense fallback={<div className="neural-placeholder" />}>
+              <NeuralScene />
+            </Suspense>
+          )}
           <div className="floating-chip chip-top"><span className="chip-pulse" /> AI that works for you</div>
           <div className="floating-chip chip-bottom"><span>↗</span> Ideas into impact</div>
           <div className="visual-caption">NEURAL SYSTEMS · 01</div>
