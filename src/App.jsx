@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { lazy, Suspense, useState } from 'react'
 import { services } from './lib/services'
 import { ServicesContext } from './lib/ServicesContext'
+import CustomCursor from './components/CustomCursor'
 import './App.css'
 
 const SiteLayout = lazy(() => import('./components/SiteLayout'))
@@ -39,5 +40,10 @@ function AppRoutes() {
 }
 
 export default function App() {
-  return <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}><AppRoutes /></BrowserRouter>
+  return (
+    <BrowserRouter basename={import.meta.env.BASE_URL} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <CustomCursor />
+      <AppRoutes />
+    </BrowserRouter>
+  )
 }

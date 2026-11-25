@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { createWhatsAppUrl } from '../lib/whatsapp'
 import { useServices } from '../lib/ServicesContext'
-import { categories } from '../lib/services'
 import Brand from './Brand'
 
 const currentYear = new Date().getFullYear()
@@ -32,19 +31,17 @@ function Header({ theme, onToggleTheme }) {
               <div className="nav-service-trigger">
                 <button className={`nav-link nav-service-trigger-button${pathname === '/services' ? ' active' : ''}`} type="button" aria-haspopup="true" aria-controls="services-menu" aria-expanded={servicesOpen} onClick={() => setServicesOpen((isOpen) => !isOpen)}>Services</button>
               </div>
-              <div id="services-menu" className="nav-service-dropdown" aria-label="Service categories">
-                {categories.map((category) => {
-                  const categoryServices = services.filter((service) => service.category === category)
-                  const categoryUrl = `/services?category=${encodeURIComponent(category)}`
-                  return (
-                    <div className="nav-service-group" key={category}>
-                      <Link className="nav-category-title" to={categoryUrl} onClick={close}>{category}<span>↗</span></Link>
-                      {categoryServices.map((service) => (
-                        <Link className="nav-service-item" key={service._id} to={`${categoryUrl}#${service._id}`} onClick={close}>{service.title}</Link>
-                      ))}
-                    </div>
-                  )
-                })}
+              <div id="services-menu" className="nav-service-dropdown" aria-label="Services">
+                {services.map((service) => (
+                  <Link
+                    className="nav-service-item"
+                    key={service._id}
+                    to={`/services?category=${encodeURIComponent(service.category)}#${service._id}`}
+                    onClick={close}
+                  >
+                    {service.title}
+                  </Link>
+                ))}
               </div>
             </div>
             <NavLink to="/contact" className={({ isActive }) => `nav-link${isActive ? ' active' : ''}`} onClick={close}>Contact</NavLink>

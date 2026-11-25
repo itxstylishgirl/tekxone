@@ -6,6 +6,10 @@ import Reveal from '../components/Reveal'
 import ServiceCard from '../components/ServiceCard'
 import BackgroundVideo from '../components/BackgroundVideo'
 import TypewriterHeading from '../components/TypewriterHeading'
+import ProcessList from '../components/ProcessList'
+import GlobalPresence from '../components/GlobalPresence'
+import TechnologyShowcase from '../components/TechnologyShowcase'
+import SolutionsShowcase from '../components/SolutionsShowcase'
 
 const NeuralScene = lazy(() => import('../components/NeuralScene'))
 const headlines = ['AI-Driven Web Solutions', 'Next-Gen Software', 'Intelligent Automation']
@@ -106,41 +110,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="process-section page-shell">
-        <Reveal><div className="section-heading"><div><span className="eyebrow">How we work</span><h2>Big ideas. <span>Clear next steps.</span></h2></div></div></Reveal>
-        <div className="process-grid">
-          {[['01', 'Discover', 'We get to know your goals, users, and the opportunity in front of you.'], ['02', 'Design', 'We turn the best ideas into a focused plan and a tangible first look.'], ['03', 'Build', 'We create, test, and refine with you — every step of the way.'], ['04', 'Grow', 'We launch with care, learn from real use, and keep making it better.']].map(([number, title, copy], index) => (
-            <motion.div
-              key={title}
-              className="process-card-reveal"
-              initial={{ opacity: 0, y: 38, scale: 0.96, filter: 'blur(7px)' }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-              whileHover={{ y: -7, scale: 1.015 }}
-              viewport={{ once: true, amount: 0.16 }}
-              transition={{ delay: (index % 3) * 0.11, duration: 0.68, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <article
-                className="process-step"
-                onMouseMove={(event) => {
-                  const rect = event.currentTarget.getBoundingClientRect()
-                  const x = event.clientX - rect.left
-                  const y = event.clientY - rect.top
-                  event.currentTarget.style.setProperty('--pointer-x', `${x}px`)
-                  event.currentTarget.style.setProperty('--pointer-y', `${y}px`)
-                  event.currentTarget.style.setProperty('--tilt-x', `${((y / rect.height) - 0.5) * -5}deg`)
-                  event.currentTarget.style.setProperty('--tilt-y', `${((x / rect.width) - 0.5) * 5}deg`)
-                }}
-                onMouseLeave={(event) => {
-                  event.currentTarget.style.setProperty('--tilt-x', '0deg')
-                  event.currentTarget.style.setProperty('--tilt-y', '0deg')
-                }}
-              >
-                <span className="process-number">{number}</span><div className="process-connector" /><h3>{title}</h3><p>{copy}</p>
-              </article>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      <TechnologyShowcase />
+
+      <ProcessList />
+      <GlobalPresence />
 
       <section className="stats-band" ref={statsRef}>
         <div className="page-shell stats-grid">
@@ -153,6 +126,8 @@ export default function Home() {
         <div className="cta-orb" />
         <Reveal><span className="eyebrow">Your next move starts here</span><h2>Let’s build something <span className="gradient-text">meaningful.</span></h2><p>Have an idea, a challenge, or just a question? We’re all ears.</p><Link className="button button-primary" to="/contact">Start a conversation <span>↗</span></Link></Reveal>
       </section>
+
+      <SolutionsShowcase />
     </>
   )
 }

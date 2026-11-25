@@ -3,9 +3,17 @@ import { motion } from 'framer-motion'
 import Reveal from '../components/Reveal'
 import TypewriterHeading from '../components/TypewriterHeading'
 import BackgroundVideo from '../components/BackgroundVideo'
+import GlobalPresence from '../components/GlobalPresence'
 
 const AboutScene = lazy(() => import('../canvas/AboutScene'))
 const technologies = ['React', 'AI / ML', 'Node.js', 'Figma', 'Three.js', 'Cloud', 'Mobile', 'TypeScript']
+const values = [
+  ['Integrity', 'We do the right thing, always.'],
+  ['Collaboration', 'Great things happen when we work together.'],
+  ['Innovation', 'We challenge the status quo and build what’s next.'],
+  ['Excellence', 'We are committed to quality in everything we do.'],
+  ['Impact', 'We create technology that empowers people and transforms lives.'],
+]
 
 export default function About() {
   const orbit = useRef(null)
@@ -36,6 +44,26 @@ export default function About() {
           <motion.article className="mission-card mission-card-blue" whileHover={{ y: -7, rotateX: 2 }} transition={{ type: 'spring', stiffness: 190 }}><span className="mission-icon">↗</span><span className="eyebrow">Our vision</span><h3>A future built with intention.</h3><p>We imagine a world where innovation is accessible, responsible, and genuinely useful to everyone.</p></motion.article>
         </div>
       </section>
+      <section className="values-section">
+        <div className="page-shell">
+          <div className="values-heading">
+            <span className="eyebrow">What drives us</span>
+            <h2>Our values.</h2>
+          </div>
+          <div className="values-grid">
+            {values.map(([title, description]) => (
+              <article className="value-card" key={title}>
+                <span className="value-icon" aria-hidden="true">
+                  <svg viewBox="0 0 24 24"><path d="m6 12 4 4 8-8" /></svg>
+                </span>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <GlobalPresence />
       <section className="tech-section">
         <div className="page-shell tech-grid"><Reveal><span className="eyebrow">Our toolkit</span><h2>The right tools<br /><span>for the right reason.</span></h2><p>Technology evolves fast. We stay curious, choose carefully, and make the stack serve the idea.</p></Reveal><div ref={orbit} className="tech-orbit" onPointerMove={moveOrbit} onPointerLeave={resetOrbit} aria-label="Interactive technology stack orbit">{technologies.map((technology, index) => <motion.span key={technology} className={`tech-pill tech-${index}`} animate={{ y: [0, -7, 0] }} transition={{ duration: 3 + index * 0.25, repeat: Infinity, delay: index * 0.12 }}>{technology}</motion.span>)}<div className="tech-center">tek<span>x</span>one</div></div></div>
       </section>
