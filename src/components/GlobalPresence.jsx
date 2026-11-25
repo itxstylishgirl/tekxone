@@ -1,11 +1,16 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import pakistanFlag from '../assets/flags/pakistan.svg'
+import saudiArabiaFlag from '../assets/flags/saudi-arabia.svg'
+import uaeFlag from '../assets/flags/uae.svg'
+import unitedKingdomFlag from '../assets/flags/united-kingdom.svg'
+import unitedStatesFlag from '../assets/flags/united-states.svg'
 
 const locations = [
-  ['Pakistan', 'HQ · Lahore'],
-  ['Saudi Arabia', 'Region'],
-  ['UAE', 'Region'],
-  ['United Kingdom', 'Region'],
-  ['United States', 'Region'],
+  ['Pakistan', 'HQ · Lahore', pakistanFlag],
+  ['Saudi Arabia', 'Region', saudiArabiaFlag],
+  ['UAE', 'Region', uaeFlag],
+  ['United Kingdom', 'Region', unitedKingdomFlag],
+  ['United States', 'Region', unitedStatesFlag],
 ]
 
 export default function GlobalPresence() {
@@ -25,7 +30,7 @@ export default function GlobalPresence() {
           <h2>Serving organizations<br />across the world.</h2>
         </motion.div>
         <div className="global-presence-grid">
-          {locations.map(([country, detail], index) => (
+          {locations.map(([country, detail, flag], index) => (
             <motion.article
               className="presence-card"
               key={country}
@@ -35,7 +40,10 @@ export default function GlobalPresence() {
               viewport={{ once: true, amount: 0.25 }}
               transition={{ duration: 0.45, delay: reduceMotion ? 0 : index * 0.08, ease: 'easeOut' }}
             >
-              <span className="presence-dot" aria-hidden="true" />
+              <div className="presence-card-top">
+                <span className="presence-dot" aria-hidden="true" />
+                <img className="presence-flag" src={flag} alt={`${country} flag`} loading="lazy" />
+              </div>
               <h3>{country}</h3>
               <p>{detail}</p>
             </motion.article>

@@ -254,9 +254,11 @@ button, input, textarea, select { font: inherit; }
 .global-presence-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
 .presence-card { min-height: 205px; padding: 32px 26px; border: 1px solid rgba(144,178,218,.17); border-radius: 22px 0 22px 0; background: linear-gradient(145deg, #0A2141, #051937); box-shadow: 0 12px 30px rgba(0,0,0,.12); transition: border-color .24s ease, background .24s ease, box-shadow .24s ease; }
 .presence-card:nth-child(even) { border-radius: 0 22px 0 22px; background: linear-gradient(215deg, #0A2141, #051937); }
+.presence-card-top { display: flex; min-height: 26px; align-items: center; justify-content: space-between; }
 .presence-dot { display: block; width: 10px; height: 10px; border-radius: 50%; background: var(--blue-bright); box-shadow: 0 0 0 0 rgba(96,165,250,.5); animation: presence-pulse 2.2s ease-out infinite; }
+.presence-flag { display: block; width: 36px; height: 24px; border: 1px solid rgba(144,178,218,.22); border-radius: 3px; object-fit: cover; box-shadow: 0 4px 10px rgba(0,0,0,.14); }
 @keyframes presence-pulse { 70%, 100% { box-shadow: 0 0 0 9px rgba(96,165,250,0); } }
-.presence-card h3 { margin: 30px 0 10px; color: #F1F1F8; font-size: 20px; font-weight: 650; letter-spacing: -.5px; }
+.presence-card h3 { margin: 22px 0 10px; color: #F1F1F8; font-size: 20px; font-weight: 650; letter-spacing: -.5px; }
 .presence-card p { margin: 0; color: #9291A8; font-family: monospace; font-size: 13px; font-weight: 600; letter-spacing: .3px; }
 .tech-section { padding-block: 75px; background: #071c38; }
 .tech-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: center; gap: 60px; }
@@ -411,7 +413,7 @@ button, input, textarea, select { font: inherit; }
   .story-section { padding-block: 50px; }.story-grid { grid-template-columns: 1fr; gap: 22px; }.story-grid h2, .tech-grid h2 { font-size: 32px; }
   .mission-section { padding-block: 58px; }.mission-grid { grid-template-columns: 1fr; }.mission-card { min-height: 200px; padding: 21px; }
   .values-section { padding: 58px 0 62px; }.values-heading { margin-bottom: 32px; }.values-heading .eyebrow { letter-spacing: 3px; }.values-heading h2 { margin-top: 14px; font-size: 42px; letter-spacing: -1.8px; }.values-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.value-card { min-height: 200px; padding: 24px 18px; }.value-card h3 { margin-top: 23px; font-size: 17px; }.value-card p { font-size: 12px; }
-  .global-presence-section { padding: 58px 0 62px; }.global-presence-heading { margin-bottom: 34px; }.global-presence-heading .eyebrow { letter-spacing: 3px; }.global-presence-heading h2 { margin-top: 15px; font-size: 38px; letter-spacing: -1.8px; }.global-presence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.presence-card { min-height: 175px; padding: 24px 18px; }.presence-card h3 { margin-top: 23px; font-size: 17px; }.presence-card p { font-size: 11px; }
+  .global-presence-section { padding: 58px 0 62px; }.global-presence-heading { margin-bottom: 34px; }.global-presence-heading .eyebrow { letter-spacing: 3px; }.global-presence-heading h2 { margin-top: 15px; font-size: 38px; letter-spacing: -1.8px; }.global-presence-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }.presence-card { min-height: 175px; padding: 24px 18px; }.presence-card h3 { margin-top: 16px; font-size: 17px; }.presence-card p { font-size: 11px; }
   .tech-section { padding-block: 57px; }.tech-grid { grid-template-columns: 1fr; gap: 25px; }.tech-orbit { min-height: 305px; transform: scale(.91); }.tech-orbit::before { width: 260px; }.tech-orbit::after { width: 280px; }.tech-pill { font-size: 8px; }.tech-1 { right: 9%; }.tech-5 { left: 5%; }
   .hero-aside { display: none; }.services-list-section { padding-top: 20px; padding-bottom: 62px; }.filter-tabs { margin-right: -19px; }.contact-section { grid-template-columns: 1fr; gap: 30px; padding-top: 10px; padding-bottom: 65px; }.contact-details h2 { font-size: 28px; }.contact-map { width: 100%; }.contact-map iframe { height: 195px; }
   .contact-form { padding: 18px; }.booking-modal { padding: 22px 17px; }.form-grid { grid-template-columns: 1fr; }.field-full { grid-column: auto; }.form-grid .button { width: 100%; }
